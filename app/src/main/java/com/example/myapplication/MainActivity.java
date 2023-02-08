@@ -11,6 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Scanner;
+
+import javax.net.ssl.HttpsURLConnection;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btn;
@@ -38,5 +44,18 @@ public class MainActivity extends AppCompatActivity {
                 );
             }
         });
+    }
+
+    public void getData() throws IOException {
+        String str = "https://predictor.yandex.net/api/v1/predict.json/complete?key=pdct.1.1.20220412T145449Z.ed53b660ddacdc8e.353ee4c0c5adc174b6be636450d97faa6e34a072&q=hello+wo&lang=en&limit=5";
+        HttpsURLConnection connection;
+        URL url = new URL(str);
+        connection = (HttpsURLConnection) url.openConnection();
+        connection.setConnectTimeout(10000);
+        connection.connect();
+
+        int code = connection.getResponseCode();
+        Scanner scanner = new Scanner(connection.getInputStream());
+        
     }
 }
